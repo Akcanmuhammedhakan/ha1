@@ -90,5 +90,27 @@ class CalculatorTest {
 
 
     //TODO hier weitere Tests erstellen
+    @Test
+    @DisplayName("should show 0 instead of -0 when switching sign on zero")
+    void testNegativeZeroDisplay() {
+
+
+        Calculator calculator = new Calculator();
+
+        // Drück die Taste 0
+        calculator.pressDigitKey(0);
+
+        // Drück die Taste für Vorzeichenwechsel
+        calculator.pressNegativeKey();
+
+        // Erwarteter Bildschirm: "0" statt "-0"
+        String expected = "0";
+        String actual = calculator.readScreen();
+
+        // Vergleiche den erwarteten und tatsächlichen Inhalt des Bildschirms
+        assertEquals(expected, actual);
+
+
+    }
 }
 
