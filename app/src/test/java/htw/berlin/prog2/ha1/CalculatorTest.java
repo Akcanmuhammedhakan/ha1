@@ -91,26 +91,20 @@ class CalculatorTest {
 
     //TODO hier weitere Tests erstellen
     @Test
-    @DisplayName("should show 0 instead of -0 when switching sign on zero")
-    void testNegativeZeroDisplay() {
-
-
+    @DisplayName("limit the screen to ten digits")
+    void testLongDecimalResult() {
         Calculator calculator = new Calculator();
 
-        // Drück die Taste 0
-        calculator.pressDigitKey(0);
+        // Berechnet 2 / 3, was eine lange Dezimalzahl ergibt 0.6 periode
+        calculator.pressDigitKey(2);
+        calculator.pressBinaryOperationKey("/");
+        calculator.pressDigitKey(3);
+        calculator.pressEqualsKey();
 
-        // Drück die Taste für Vorzeichenwechsel
-        calculator.pressNegativeKey();
-
-        // Erwarteter Bildschirm: "0" statt "-0"
-        String expected = "0";
+        // Erwartetes Ergebnis auf 10 Zeichen gekürzt
+        String expected = "0.666666666";
         String actual = calculator.readScreen();
 
-        // Vergleiche den erwarteten und tatsächlichen Inhalt des Bildschirms
         assertEquals(expected, actual);
-
-
     }
 }
-
