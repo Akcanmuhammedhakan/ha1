@@ -90,28 +90,41 @@ class CalculatorTest {
 
 
     //TODO hier weitere Tests erstellen
-    // TODO hier weitere Tests erstellen
-
     @Test
-    @DisplayName("decimal number if dot pressed")
-    void testPressDotKey() {
-        Calculator calculator = new Calculator(); // Erstelle einen neuen Calculator
+    @DisplayName("should show 0 instead of -0 when switching sign on zero")
+    void testNegativeZeroDisplay() {
 
-        // Drückt die Taste 5
-        calculator.pressDigitKey(5);
+        Calculator calculator = new Calculator();
 
-        // Drückt die Dezimal-Taste
-        calculator.pressDotKey();
+        //Drück die Taste 0
+        calculator.pressDigitKey(0);
 
-        // Drücke die Taste 3
-        calculator.pressDigitKey(3);
+        // Drück die Taste für Vorzeichenwechsel
+        calculator.pressNegativeKey();
 
-        // Erwarteter Bildschirm-Inhalt: "5.3"
-        String expected = "5.3";
+        //Erwarteter Bidlschirm "0" statt "-0"
+        String expected = "0";
         String actual = calculator.readScreen();
 
-        // Vergleicht den Inhalt des Bildschirms
+        // Vergleiche den erwarteten und tatsächlichen Inhalt des Bildschirms
         assertEquals(expected, actual);
+    }
+    @Test
+    @DisplayName("limit the screen to ten digits")
+    void testLongDecimalResult() {
+        Calculator calculator = new Calculator();
 
+        //Berechnet 2 / 3, was eine lange Dezimalzahl ergibt 0.6 periode
+        calculator.pressDigitKey(2);
+        calculator.pressBinaryOperationKey("/");
+        calculator.pressDigitKey(3);
+        calculator.pressEqualsKey();
+
+        // Erwartetes Ergebnis auf 10 Zeichen gekürzt
+        String expected = "0.66666666";
+        String actual = calculator.readScreen();
+
+        // vergleiche den erwarteten und tatsächlichen Inhalt des Bildschirms
+        assertEquals(expected, actual);
     }
 }
